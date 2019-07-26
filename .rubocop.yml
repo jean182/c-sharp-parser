@@ -1,5 +1,7 @@
 AllCops:
   TargetRubyVersion: 2.6
+  Exclude:
+    - "lib/language_parser/scanner.rb"
 
 Style/Documentation:
   Enabled: false
@@ -15,6 +17,8 @@ Metrics/MethodLength:
 
 Metrics/BlockLength:
   Max: 40
+  Exclude:
+    - "spec/**/*"
 
 Metrics/ClassLength:
   Max: 150
