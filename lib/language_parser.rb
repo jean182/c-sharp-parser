@@ -13,14 +13,14 @@ require "pry"
 module LanguageParser
 
   def self.define(&block)
-    @lexer = LanguageParser::Scanner.new
-    @lexer.instance_eval(&block)
+    @parser = LanguageParser::Scanner.new
+    @parser.instance_eval(&block)
 
-    @lexer
+    @parser
   end
 
   def self.reset!
-    remove_instance_variable(:@lexer) if @lexer
+    remove_instance_variable(:@parser) if @parser
   end
 
 end

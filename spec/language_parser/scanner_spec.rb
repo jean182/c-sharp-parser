@@ -8,17 +8,17 @@ end
 
 describe "#analyze" do
   it "raise an erorr if source file cannot be found" do
-    lexer = LanguageParser.define do
+    parser = LanguageParser.define do
       token ANY: /^.*$/
     end
 
-    expect { lexer.analyze { from_file "/root/surce.math" } }.to raise_error(RuntimeError)
+    expect { parser.analyze { from_file "/root/surce.math" } }.to raise_error(RuntimeError)
   end
 
   # it "tokenizes a csharp file" do
   #   source = File.join(File.dirname(__FILE__), "/fixtures/source.cs")
 
-  #   lexer = LanguageParser.define do
+  #   parser = LanguageParser.define do
   #     token EQ: /^=$/
   #     token PLUS: /^\+$/
   #     token MINUS: /^\-$/
@@ -31,7 +31,7 @@ describe "#analyze" do
   #     token ID: /^[\w_]+$/
   #   end
 
-  #   lexer.analyze do
+  #   parser.analyze do
   #     from_file source
   #   end
   # end
@@ -39,7 +39,7 @@ describe "#analyze" do
   it "tokenize a math formulas source" do
     source = File.join(File.dirname(__FILE__), "/fixtures/source.math")
 
-    lexer = LanguageParser.define do
+    parser = LanguageParser.define do
       token "OPEN" => /^\($/
       token "CLOSE" => /^\)$/
       token "PLUS"     => /^\+$/
@@ -51,18 +51,18 @@ describe "#analyze" do
       token "VAR"      => /^\w+\d?$/
     end
 
-    lexer.analyze do
+    parser.analyze do
       from_file source
     end
 
-    expect(lexer.tokens[4].name).to eql("FUNCTION")
-    expect(lexer.tokens[4].value).to eql("sqrt")
+    expect(parser.tokens[4].name).to eql("FUNCTION")
+    expect(parser.tokens[4].value).to eql("sqrt")
   end
 
   it "tokenize a program language pseudo code" do
     source = File.join(File.dirname(__FILE__), "/fixtures/source.pseudo")
 
-    lexer = LanguageParser.define do
+    parser = LanguageParser.define do
       token EQ: /^=$/
       token PLUS: /^\+$/
       token MINUS: /^\-$/
@@ -74,16 +74,16 @@ describe "#analyze" do
       token ID: /^[\w_]+$/
     end
 
-    lexer.analyze do
+    parser.analyze do
       from_file source
     end
 
-    expect(lexer.tokens[-1].name).to eq(:RESERVED)
-    expect(lexer.tokens[-1].value).to eq("fin")
+    expect(parser.tokens[-1].name).to eq(:RESERVED)
+    expect(parser.tokens[-1].value).to eq("fin")
   end
 
   it "tokenizes a human language sentence" do
-    lexer = LanguageParser.define do
+    parser = LanguageParser.define do
       token STOP: /^\.$/
       token COMA: /^,$/
       token QUES: /^\?$/
@@ -93,7 +93,7 @@ describe "#analyze" do
       token WORD: /^[\w\-]+$/
     end
 
-    tokens = lexer.analyze do
+    tokens = parser.analyze do
       from_string "Hello! My name is Jean Aguilar. You killed my father. Prepare to die."
     end
 

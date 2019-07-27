@@ -3,17 +3,17 @@
 class String
 
   def tokenize
-    @lexer ||= LanguageParser.define do
+    @parser ||= LanguageParser.define do
       use_language :natural
     end
 
     string_content = self
 
-    @lexer.analyze do
+    @parser.analyze do
       from_string string_content
     end
 
-    @lexer.tokens
+    @parser.tokens
   end
 
 end
